@@ -90,15 +90,27 @@ class DetailView: UIView {
 
    private func setupLayout() {
        NSLayoutConstraint.activate([
-           message.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-           message.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-           message.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
-           message.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+           name.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+           name.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
+           name.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+           name.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
 
-           detailedIcon.widthAnchor.constraint(equalToConstant: 70),
-           detailedIcon.heightAnchor.constraint(equalToConstant: 70),
-           detailedIcon.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-           detailedIcon.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -120)
+           characterCode.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 10),
+           characterCode.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+           characterCode.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+
+           iconContainer.widthAnchor.constraint(equalToConstant: 100),
+           iconContainer.heightAnchor.constraint(equalToConstant: 100),
+           iconContainer.topAnchor.constraint(equalTo: characterCode.bottomAnchor,constant: 15),
+           iconContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+
+           infoAboutObject.topAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 10),
+           infoAboutObject.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+           infoAboutObject.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+
+           listOfComics.topAnchor.constraint(equalTo: infoAboutObject.bottomAnchor, constant: 10),
+           listOfComics.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+           listOfComics.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
        ])
    }
 
