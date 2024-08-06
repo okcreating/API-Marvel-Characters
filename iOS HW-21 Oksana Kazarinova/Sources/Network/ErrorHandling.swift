@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum Error: String, Error {
+   
+    
+    
+}

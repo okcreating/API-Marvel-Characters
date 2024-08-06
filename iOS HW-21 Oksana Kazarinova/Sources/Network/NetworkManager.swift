@@ -6,3 +6,14 @@
 //
 
 import Foundation
+
+final class NetworkManager {
+
+    func create URL {
+
+    }
+
+    func createRequest {
+
+    }
+}
