@@ -9,21 +9,24 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    var detailedModel: CharacterModel?
+
+     weak var detailedView: DetailView? {
+        guard isViewLoaded else { return nil }
+        return view as? DetailView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        view = DetailView()
+        cofigureView()
     }
-    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+extension DetailViewController {
+    func cofigureView() {
+        guard let models = detailedModel else { return }
+        detailedView?.configureView(with: models )
+        }
 
 }
