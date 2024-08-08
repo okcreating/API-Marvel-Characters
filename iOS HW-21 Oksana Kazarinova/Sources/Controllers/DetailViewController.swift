@@ -9,7 +9,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    var detailedModel: CharacterModel?
+    var detailedModel: Character?
 
      weak var detailedView: DetailView? {
         guard isViewLoaded else { return nil }
@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view = DetailView()
         cofigureView()
+        detailedView?.activityIndictor.startAnimating()
     }
 }
 

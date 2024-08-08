@@ -21,6 +21,7 @@ class TableViewController: UITableViewController {
         view = View()
      //   model = Character()
         configure()
+        mainView.activityIndictor.startAnimating()
     }
 }
 

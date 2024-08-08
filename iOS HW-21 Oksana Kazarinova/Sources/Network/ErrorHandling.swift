@@ -7,8 +7,12 @@
 
 import Foundation
 
-enum Error: String, Error {
-   
-    
-    
+enum NetworkError: String, Error, LocalizedError {
+    case notFoud = "Not found"
+    case badRequest = "Bad request"
+    case decodingError = "Decoding Error"
+
+    var errorDescription: String? {
+        return NSLocalizedString(rawValue, comment: "")
+    }
 }

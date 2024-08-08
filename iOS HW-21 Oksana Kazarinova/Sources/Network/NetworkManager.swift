@@ -6,24 +6,41 @@
 //
 
 import Foundation
+import Alamofire
+
+enum Path: String {
+    case listOfCharacters = "/v1/public/characters"
+    case wrongURL = "/v0/neverfindable"
+}
 
 final class NetworkManager {
 
-    enum Path: String {
-        case v1Cards = "/v1/public/characters"
-        case wrongURL = "/v0/neverfindable"
+    var host: String
+    var path: Path
+    var queryItems: [URLQueryItem]
+
+    init(host: String, path: Path, queryItems: [URLQueryItem]) {
+        self.host = host
+        self.path = path
+        self.queryItems = queryItems
     }
 
-    func createURL(path: Path, queryItems: [URLQueryItem]) -> URL? {
+    func createURL(host: String, path: Path, queryItems: [URLQueryItem]) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.magicthegathering.io"
+        components.host = host
         components.path = path.rawValue
         components.queryItems = queryItems
         return components.url
     }
 
-    func createRequest {
-let request = URLRequest(url: <#T##URL#>)
+    func createRequest(url: URL?) -> URLRequest? {
+        guard let url else { return nil }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+    }
+
+    func getData {
+        AF.
     }
 }

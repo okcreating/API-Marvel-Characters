@@ -64,6 +64,14 @@ class DetailView: UIView {
         return image
     }()
 
+    lazy var activityIndictor: UIActivityIndicatorView = {
+        let activitySign = UIActivityIndicatorView()
+        activitySign.isAnimating = true
+        activitySign.style = .medium
+        activitySign.hidesWhenStopped = true
+        return activitySign
+    }()
+
    // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -85,7 +93,7 @@ class DetailView: UIView {
        addSubview(iconContainer)
        addSubview(infoAboutObject)
        addSubview(listOfComics)
-
+       addSubview(activityIndictor)
    }
 
    private func setupLayout() {
@@ -111,6 +119,9 @@ class DetailView: UIView {
            listOfComics.topAnchor.constraint(equalTo: infoAboutObject.bottomAnchor, constant: 10),
            listOfComics.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
            listOfComics.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+
+           activityIndictor.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+           activityIndictor.centerYAnchor.constraint(equalTo: self.centerYAnchor)
        ])
    }
 
