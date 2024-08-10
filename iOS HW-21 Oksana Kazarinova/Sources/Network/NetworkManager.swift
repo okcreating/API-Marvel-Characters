@@ -6,24 +6,82 @@
 //
 
 import Foundation
+import Alamofire
+
+enum Path: String {
+    case listOfCharacters = "/v1/public/characters"
+    case wrongURL = "/v0/neverfindable"
+}
 
 final class NetworkManager {
 
-    enum Path: String {
-        case v1Cards = "/v1/public/characters"
-        case wrongURL = "/v0/neverfindable"
-    }
+    //    var host: String
+    //    var path: Path
+    //    var queryItems: [URLQueryItem]
+    //
+    //    init(host: String, path: Path, queryItems: [URLQueryItem]) {
+    //        self.host = host
+    //        self.path = path
+    //        self.queryItems = queryItems
+    //    }
 
-    func createURL(path: Path, queryItems: [URLQueryItem]) -> URL? {
+    func createURL(path: Path) -> String? {
+
+        let publicKey = "79eaebd384b9c4dc6d5b8498c70de65f"
+        let privateKey = "56d8367e02b0b31038ed8293b79bd42c71cbe0e7"
+        let ts = String(Date.now.timeIntervalSince1970)
+        let hashString = "\(ts)\(privateKey)\(publicKey)".md5
+
+        let tsQueryItem = URLQueryItem(name: "ts", value: ts)
+        let apiQueryItem = URLQueryItem(name: "apikey", value: publicKey)
+        let hashQueryItem = URLQueryItem(name: "hash", value: hashString)
+
         var components = URLComponents()
         components.scheme = "https"
-        components.host = "api.magicthegathering.io"
+        components.host = "gateway.marvel.com"
         components.path = path.rawValue
-        components.queryItems = queryItems
-        return components.url
+        components.queryItems = [tsQueryItem, apiQueryItem, hashQueryItem]
+
+        return String(describing: components.url)
+    }
+   
+    //    func createRequest(url: URL?) -> URLRequest? {
+    //        guard let url else { return nil }
+    //        var request = URLRequest(url: url)
+    //        request.httpMethod = "GET"
+    //    }
+
+    func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
+        AF.request(createURL(path: .listOfCharacters) ?? NetworkError.notFound.localizedDescription)
+            .validate()
+            .response { response in
+                guard let data = response.data else {
+                    if let error = response.error {
+                        completion(.failure(NetworkError.badRequest))
+                    }
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let characterResults = try? decoder.decode(Characters.self, from: data) else {
+                    completion(.failure(NetworkError.decodingError))
+                    return
+                }
+                completion(.success(characterResults))
+            }
     }
 
-    func createRequest {
-let request = URLRequest(url: <#T##URL#>)
+    func dataWorkout() {
+        getData { result in
+            switch result {
+            case .success(let characters):
+                let data = characters.characters
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
+
+
+
+
