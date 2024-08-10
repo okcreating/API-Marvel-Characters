@@ -20,14 +20,36 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view = DetailView()
         cofigureView()
-        detailedView?.activityIndictor.startAnimating()
+
     }
 }
 
 extension DetailViewController {
     func cofigureView() {
         guard let models = detailedModel else { return }
-        detailedView?.configureView(with: models )
-        }
+        detailedView?.configureView(with: models)
+        cofigureImage()
+        cofigureComicsList()
+        detailedView?.activityIndictor.stopAnimating()
+    }
+}
 
+extension DetailViewController {
+    func cofigureImage() {
+        var image: Image? {
+            didSet {
+                detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").\(image?.extension ?? "")")
+            }
+        }
+    }
+}
+
+extension DetailViewController {
+    func cofigureComicsList() {
+        var comicsList: ComicList?
+        var comicName: ComicSummary?
+        if comicsList != nil && comicName != nil {
+            detailedView?.listOfComics.text = "Comics: (\(String(describing: comicsList?.items)))"
+        }
+    }
 }

@@ -15,17 +15,17 @@ enum Path: String {
 
 final class NetworkManager {
 
-    var host: String
-    var path: Path
-    var queryItems: [URLQueryItem]
+    //    var host: String
+    //    var path: Path
+    //    var queryItems: [URLQueryItem]
+    //
+    //    init(host: String, path: Path, queryItems: [URLQueryItem]) {
+    //        self.host = host
+    //        self.path = path
+    //        self.queryItems = queryItems
+    //    }
 
-    init(host: String, path: Path, queryItems: [URLQueryItem]) {
-        self.host = host
-        self.path = path
-        self.queryItems = queryItems
-    }
-
-    func createURL(path: Path) -> URL? {
+    func createURL(path: Path) -> String? {
 
         let publicKey = "79eaebd384b9c4dc6d5b8498c70de65f"
         let privateKey = "56d8367e02b0b31038ed8293b79bd42c71cbe0e7"
@@ -42,16 +42,46 @@ final class NetworkManager {
         components.path = path.rawValue
         components.queryItems = [tsQueryItem, apiQueryItem, hashQueryItem]
 
-        return components.url
+        return String(describing: components.url)
+    }
+   
+    //    func createRequest(url: URL?) -> URLRequest? {
+    //        guard let url else { return nil }
+    //        var request = URLRequest(url: url)
+    //        request.httpMethod = "GET"
+    //    }
+
+    func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
+        AF.request(createURL(path: .listOfCharacters) ?? NetworkError.notFound.localizedDescription)
+            .validate()
+            .response { response in
+                guard let data = response.data else {
+                    if let error = response.error {
+                        completion(.failure(NetworkError.badRequest))
+                    }
+                    return
+                }
+                let decoder = JSONDecoder()
+                guard let characterResults = try? decoder.decode(Characters.self, from: data) else {
+                    completion(.failure(NetworkError.decodingError))
+                    return
+                }
+                completion(.success(characterResults))
+            }
     }
 
-    func createRequest(url: URL?) -> URLRequest? {
-        guard let url else { return nil }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-    }
-
-    func getData {
-        AF.
+    func dataWorkout() {
+        getData { result in
+            switch result {
+            case .success(let characters):
+                let data = characters.characters
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
+
+
+
+

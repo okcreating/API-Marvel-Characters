@@ -7,7 +7,7 @@
 
 import UIKit
 
-class View: UIView {
+class TableView: UIView {
 
     // MARK: - Outlets
 

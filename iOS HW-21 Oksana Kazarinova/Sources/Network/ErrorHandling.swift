@@ -8,9 +8,9 @@
 import Foundation
 
 enum NetworkError: String, Error, LocalizedError {
-    case notFoud = "Not found"
+    case notFound = "Not found"
     case badRequest = "Bad request"
-    case decodingError = "Decoding Error"
+    case decodingError = "Decoding error"
 
     var errorDescription: String? {
         return NSLocalizedString(rawValue, comment: "")

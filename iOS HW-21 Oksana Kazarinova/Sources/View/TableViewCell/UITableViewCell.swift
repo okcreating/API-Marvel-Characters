@@ -11,13 +11,13 @@ class TableViewCell: UITableViewCell {
 
     static let identifier = "TableViewCell"
 
-//    var setting: Setting? {
-//        didSet {
-//            settingName.text = setting?.name.rawValue
-//            settingIcon.backgroundColor = UIColor.init(hex: setting?.imageViewColorCode ?? "")
-//            setupIcon()
-//        }
-//    }
+    var character: Character? {
+        didSet {
+            name.text = character?.name
+            objectDescription.text = character?.description
+            setupIcon()
+        }
+    }
 
    // MARK: - Outlets
 
@@ -28,10 +28,10 @@ class TableViewCell: UITableViewCell {
         return name
     }()
 
-    private var icon: UIImage = {
-        let image = UIImage()
-        return image
-    }()
+//    private var icon: UIImage = {
+//        let image = UIImage()
+//        return image
+//    }()
 
     private var imageContainer: UIImageView = {
         let imageView = UIImageView()
@@ -54,7 +54,7 @@ class TableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: TableViewCell.identifier)
-        icon.withTintColor(.systemRed, renderingMode: .automatic)
+        //icon.withTintColor(.systemRed, renderingMode: .automatic)
         setupHierarchy()
         setupLayout()
     }
@@ -88,14 +88,13 @@ class TableViewCell: UITableViewCell {
         ])
     }
 
-//        private func setupIcon() {
-//            switch setting?.name {
-//            case .blueTooth, .siriAndSearch, .homeScreen:
-//                settingIcon.image = UIImage(named: setting?.icon ?? "")
-//            default:
-//                settingIcon.image = icon.editIcon(imageName: setting?.icon ?? "")
-//                }
-//            }
+        private func setupIcon() {
+            var image: Image? {
+                didSet {
+                    imageContainer.image = UIImage(named: "\(image?.path ?? "").\(image?.extension ?? "")")
+                }
+            }
+        }
 
     // MARK: - Reuse
 
