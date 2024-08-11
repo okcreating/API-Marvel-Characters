@@ -99,7 +99,9 @@ class TableViewCell: UITableViewCell {
     // MARK: - Reuse
 
     override func prepareForReuse() {
-        self.accessoryType = .none
+        self.imageContainer.image = nil
+        self.name.text = nil
+        self.objectDescription.text = nil
     }
 }
 

@@ -15,7 +15,7 @@ class TableView: UIView {
         let textField = UITextField()
         textField.placeholder = "Type the character here"
         textField.keyboardType = .webSearch
-        textField.returnKeyType = .go
+        textField.returnKeyType = .search
         textField.clearButtonMode = .always
         textField.textAlignment = .left
         return textField
@@ -83,5 +83,10 @@ class TableView: UIView {
             activityIndictor.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             activityIndictor.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
+    }
+
+    @objc
+    func buttonTapped() {
+        TableViewController.searchCharacter()
     }
 }
