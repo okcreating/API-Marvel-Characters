@@ -14,6 +14,7 @@ enum Path: String {
 }
 
 final class NetworkManager {
+    
 
     //    var host: String
     //    var path: Path
@@ -68,13 +69,14 @@ final class NetworkManager {
                 }
                 completion(.success(characterResults))
             }
-    }
+        }
 
     func dataWorkout() {
         getData { result in
             switch result {
             case .success(let characters):
                 let data = characters.characters
+                Tab
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class TableViewController: UIViewController {
 
     var decodedData: [Character]?
     var networkManager = NetworkManager()
@@ -25,8 +25,11 @@ class TableViewController: UITableViewController {
         mainView.activityIndictor.startAnimating()
         networkManager.dataWorkout()
     }
-}
 
+    func searchCharacter() {
+        
+    }
+}
 
 private extension TableViewController {
     func configure() {
@@ -42,30 +45,28 @@ private extension TableViewController {
 
 extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         decodedData?.count ?? 0
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let character = decodedData?[indexPath.row]
-        var cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
-        cell.
-        cell = decodedData.character.
-        mainView?.activityIndictor.stopAnimating()
-            return cell ?? UITableViewCell()
-
+            let character = decodedData?[indexPath.row]
+            var cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
+            cell?.character = character
+            mainView?.activityIndictor.stopAnimating()
+                return cell ?? UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let setting = decodedData?[indexPath.row]
+        let character = decodedData?[indexPath.row]
 
-            let detailedController = DetailViewController()
-            tableView.deselectRow(at: indexPath, animated: true)
-            detailedController.detailedModel = setting
-            navigationController?.pushViewController(detailedController, animated: true)
-            }
+        let detailedController = DetailViewController()
+        tableView.deselectRow(at: indexPath, animated: true)
+        detailedController.detailedModel = character
+        navigationController?.pushViewController(detailedController, animated: true)
+    }
 }
