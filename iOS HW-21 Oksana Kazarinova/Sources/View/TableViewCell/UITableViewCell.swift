@@ -35,10 +35,12 @@ class TableViewCell: UITableViewCell {
 
     private var imageContainer: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5
+        imageView.frame.size.width = 50
+        imageView.frame.size.height = 50
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -104,4 +106,3 @@ class TableViewCell: UITableViewCell {
         self.objectDescription.text = nil
     }
 }
-

@@ -20,6 +20,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view = DetailView()
         cofigureView()
+        
 
     }
 }

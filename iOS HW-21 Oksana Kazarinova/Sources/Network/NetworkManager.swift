@@ -57,7 +57,7 @@ final class NetworkManager {
             .validate()
             .response { response in
                 guard let data = response.data else {
-                    if let error = response.error {
+                    if response.error != nil {
                         completion(.failure(NetworkError.badRequest))
                     }
                     return
@@ -76,7 +76,7 @@ final class NetworkManager {
             switch result {
             case .success(let characters):
                 let data = characters.characters
-                Tab
+
             case .failure(let error):
                 print(error.localizedDescription)
             }
