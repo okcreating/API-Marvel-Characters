@@ -10,36 +10,47 @@ import UIKit
 class TableViewController: UIViewController {
 
     var decodedData: [Character]?
+    var filteredData: [Character]?
     var networkManager = NetworkManager()
+
+// MARK: Outlets
 
     private weak var mainView: TableView! {
         guard isViewLoaded else { return nil }
         return (view as? TableView)
     }
 
+    // MARK: Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view = TableView()
-        decodedData = [Character]()
-        configure()
+        configureTableView()
         mainView.activityIndictor.startAnimating()
         networkManager.dataWorkout()
-    }
-
-    func searchCharacter() {
-        
+        configureSearchBar()
     }
 }
 
+// MARK: Extensions
+
 private extension TableViewController {
-    func configure() {
+    func configureTableView() {
         mainView.mainTableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         mainView.mainTableView.dataSource = self
         mainView.mainTableView.delegate = self
-
         title = "Marvel Characters"
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationController?.navigationBar.addSubview(mainView.searchBar)
+
+
+    }
+
+    func configureSearchBar() {
+        mainView.searchBar.delegate = self
+        decodedData = [Character]()
+        filteredData = decodedData
     }
 }
 
@@ -54,11 +65,11 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let character = decodedData?[indexPath.row]
-            var cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
-            cell?.character = character
-            mainView?.activityIndictor.stopAnimating()
-                return cell ?? UITableViewCell()
+        let character = decodedData?[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
+        cell?.character = character
+        mainView?.activityIndictor.stopAnimating()
+        return cell ?? UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -70,3 +81,22 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(detailedController, animated: true)
     }
 }
+
+extension TableViewController: UISearchBarDelegate {
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        decodedData?.forEach({ character in
+            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
+        })
+
+        }
+//        filteredData = searchText.isEmpty ? decodedData : decodedData?.filter { (name: String) -> Bool in
+//            return name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+//
+//
+//        }
+//        mainView.mainTableView.reloadData()
+    }
+}
+
+
