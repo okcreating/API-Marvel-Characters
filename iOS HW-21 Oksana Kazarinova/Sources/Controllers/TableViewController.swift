@@ -82,6 +82,11 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 extension TableViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredData = decodedData?.filter({ item -> Bool in
+          if searchText.isEmpty { return true }
+            return ((item.name?.lowercased().contains(searchText.lowercased())) != nil)
+          })
+        mainView.mainTableView.reloadData()
 //        decodedData?.forEach({ character in
 //            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
 //        })

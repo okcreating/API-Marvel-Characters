@@ -119,11 +119,11 @@
 		C638D0CC2C60E36C002C59AB /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				C63926252C656A4D00124D41 /* Extensions */,
 				C633A3032C61712B005CB908 /* Model */,
 				C633A3042C617149005CB908 /* View */,
 				C638D0CD2C60E379002C59AB /* Controllers */,
 				C638D0D52C60E78A002C59AB /* Network */,
+				C63926252C656A4D00124D41 /* Extensions */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
