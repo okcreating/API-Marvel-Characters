@@ -42,9 +42,6 @@ private extension TableViewController {
         title = "Marvel Characters"
         navigationController?.navigationBar.tintColor = UIColor.white
         navigationController?.navigationBar.prefersLargeTitles = true
-        //navigationController?.navigationBar.addSubview(mainView.searchBar)
-
-
     }
 
     func configureSearchBar() {
@@ -57,7 +54,7 @@ private extension TableViewController {
 extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        decodedData?.count ?? 0
+        filteredData?.count ?? 0
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,7 +62,7 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let character = decodedData?[indexPath.row]
+        let character = filteredData?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
         cell?.character = character
         mainView?.activityIndictor.stopAnimating()
@@ -73,7 +70,7 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let character = decodedData?[indexPath.row]
+        let character = filteredData?[indexPath.row]
 
         let detailedController = DetailViewController()
         tableView.deselectRow(at: indexPath, animated: true)
@@ -85,11 +82,11 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 extension TableViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        decodedData?.forEach({ character in
-            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
-        })
-
-        }
+//        decodedData?.forEach({ character in
+//            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
+//        })
+//
+//        }
 //        filteredData = searchText.isEmpty ? decodedData : decodedData?.filter { (name: String) -> Bool in
 //            return name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
 //

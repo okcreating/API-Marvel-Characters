@@ -52,22 +52,25 @@ final class NetworkManager {
     //        request.httpMethod = "GET"
     //    }
 
-    func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
+    func getData(completion: @escaping (Result<Character, NetworkError>) -> ()) {
         AF.request(createURL(path: .listOfCharacters) ?? NetworkError.notFound.localizedDescription)
-            .validate()
+
             .response { response in
                 guard let data = response.data else {
                     if response.error != nil {
                         completion(.failure(NetworkError.badRequest))
+                        print("bad request")
                     }
                     return
                 }
                 let decoder = JSONDecoder()
-                guard let characterResults = try? decoder.decode(Characters.self, from: data) else {
+                guard let characterResults = try? decoder.decode(Character.self, from: data) else {
                     completion(.failure(NetworkError.decodingError))
+                    print("decoding error")
                     return
                 }
                 completion(.success(characterResults))
+                print("got data")
             }
         }
 
@@ -75,8 +78,9 @@ final class NetworkManager {
         getData { result in
             switch result {
             case .success(let characters):
-                let data = characters.characters
-
+                let data = characters
+                let controller = TableViewController()
+                controller.decodedData = [data]
             case .failure(let error):
                 print(error.localizedDescription)
             }

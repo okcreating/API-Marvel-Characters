@@ -48,6 +48,7 @@ class TableViewCell: UITableViewCell {
     private var objectDescription: UILabel = {
         let description = UILabel()
         description.font = UIFont.systemFont(ofSize: 11, weight: .light)
+        description.numberOfLines = 0
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
@@ -55,8 +56,8 @@ class TableViewCell: UITableViewCell {
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: TableViewCell.identifier)
-        //icon.withTintColor(.systemRed, renderingMode: .automatic)
+        super.init(style: style, reuseIdentifier: TableViewCell.identifier)
+        selectionStyle = .none
         setupHierarchy()
         setupLayout()
     }
@@ -75,18 +76,19 @@ class TableViewCell: UITableViewCell {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            imageContainer.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-            imageContainer.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
-            imageContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
-            imageContainer.widthAnchor.constraint(equalToConstant: 30),
-            imageContainer.heightAnchor.constraint(equalToConstant: 30),
+            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+//            imageContainer.widthAnchor.constraint(equalToConstant: 30),
+//            imageContainer.heightAnchor.constraint(equalToConstant: 30),
 
-            name.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 20),
-            name.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
+            name.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
+            name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            name.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
 
-            objectDescription.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 20),
-            objectDescription.trailingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            objectDescription.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
+            objectDescription.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
+            objectDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 10),
+            objectDescription.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 4)
         ])
     }
 
