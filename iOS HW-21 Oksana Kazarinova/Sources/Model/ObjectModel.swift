@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Characters: Decodable {
+public struct Characters: Codable {
     let characters: [Character]
 }
 

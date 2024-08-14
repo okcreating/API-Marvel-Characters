@@ -99,6 +99,12 @@ extension TableViewController: UISearchBarDelegate {
 //        }
 //        mainView.mainTableView.reloadData()
     }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.showsCancelButton = false
+            searchBar.text = ""
+            searchBar.resignFirstResponder()
+    }
 }
 
 
