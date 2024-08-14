@@ -30,7 +30,8 @@ final class NetworkManager {
 
         let publicKey = "79eaebd384b9c4dc6d5b8498c70de65f"
         let privateKey = "56d8367e02b0b31038ed8293b79bd42c71cbe0e7"
-        let ts = String(Date.now.timeIntervalSince1970)
+        //let ts = String(Date.now.timeIntervalSince1970)
+        let ts = "1"
         let hashString = "\(ts)\(privateKey)\(publicKey)".md5
 
         let tsQueryItem = URLQueryItem(name: "ts", value: ts)
@@ -45,7 +46,7 @@ final class NetworkManager {
 
         return String(describing: components.url)
     }
-   
+
     //    func createRequest(url: URL?) -> URLRequest? {
     //        guard let url else { return nil }
     //        var request = URLRequest(url: url)
@@ -53,21 +54,25 @@ final class NetworkManager {
     //    }
 
     func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
-        AF.request(createURL(path: .listOfCharacters) ?? NetworkError.notFound.localizedDescription)
+        let url = createURL(path: .listOfCharacters)
+       // print("\(url)")
+        AF.request(url ?? NetworkError.notFound.localizedDescription)
             .validate()
             .response { response in
                 guard let data = response.data else {
                     if response.error != nil {
                         completion(.failure(NetworkError.badRequest))
+                        print("bad request")
                     }
                     return
                 }
-                let decoder = JSONDecoder()
-                guard let characterResults = try? decoder.decode(Characters.self, from: data) else {
+                guard let characterResults = try? JSONDecoder().decode(Characters.self, from: data) else {
                     completion(.failure(NetworkError.decodingError))
+                    print("decoding error")
                     return
                 }
                 completion(.success(characterResults))
+                print("got data")
             }
         }
 
@@ -75,8 +80,8 @@ final class NetworkManager {
         getData { result in
             switch result {
             case .success(let characters):
-                let data = characters.characters
-
+                let controller = TableViewController()
+                controller.decodedData = characters.characters
             case .failure(let error):
                 print(error.localizedDescription)
             }
