@@ -20,7 +20,6 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         view = DetailView()
         cofigureView()
-
     }
 }
 
@@ -46,10 +45,10 @@ extension DetailViewController {
 
 extension DetailViewController {
     func cofigureComicsList() {
-        var comicsList: ComicList?
-        var comicName: ComicSummary?
-        if comicsList != nil && comicName != nil {
-            detailedView?.listOfComics.text = "Comics: (\(String(describing: comicsList?.items)))"
-        }
+            var comicName: ComicSummary? {
+                didSet {
+                    detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
+                }
+            }
     }
 }
