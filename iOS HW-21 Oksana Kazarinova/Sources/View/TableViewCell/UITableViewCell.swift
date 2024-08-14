@@ -95,7 +95,8 @@ class TableViewCell: UITableViewCell {
         private func setupIcon() {
             var image: Image? {
                 didSet {
-                    imageContainer.image = UIImage(named: "\(image?.path ?? "").\(image?.extension ?? "")")
+                    imageContainer.image = UIImage(named: "\(image?.path ?? "").jpg")
+                                                   //\(String(describing: image?.thumbnailExtension?.rawValue))")
                 }
             }
         }

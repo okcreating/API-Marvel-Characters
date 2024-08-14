@@ -126,7 +126,7 @@ class DetailView: UIView {
 
     func configureView(with model: Character) {
         name.text = model.name
-        characterCode.text = String(describing: model.code)
+        characterCode.text = String(describing: model.id)
         infoAboutObject.text = model.description
     }
 }

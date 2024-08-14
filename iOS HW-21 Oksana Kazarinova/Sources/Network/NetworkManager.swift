@@ -30,8 +30,8 @@ final class NetworkManager {
 
         let publicKey = "79eaebd384b9c4dc6d5b8498c70de65f"
         let privateKey = "56d8367e02b0b31038ed8293b79bd42c71cbe0e7"
-        //let ts = String(Date.now.timeIntervalSince1970)
-        let ts = "1"
+        let ts = String(Date.now.timeIntervalSince1970)
+        //let ts = "1"
         let hashString = "\(ts)\(privateKey)\(publicKey)".md5
 
         let limitQueryItem = URLQueryItem(name: "limit", value: "10")
@@ -56,9 +56,8 @@ final class NetworkManager {
     //        request.httpMethod = "GET"
     //    }
 
-    func getData(completion: @escaping (Result<Character, NetworkError>) -> ()) {
+    func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
         let url = createURL(path: .listOfCharacters)
-       // print("\(url)")
         guard let marvelUrl = url else { return }
         AF.request(marvelUrl)
             .validate()
@@ -66,13 +65,11 @@ final class NetworkManager {
                 guard let data = response.data else {
                     if response.error != nil {
                         completion(.failure(NetworkError.badRequest))
-                        print("bad request")
                     }
                     return
                 }
-                guard let results = try? JSONDecoder().decode(Character.self, from: data) else {
+                guard let results = try? JSONDecoder().decode(Characters.self, from: data) else {
                     completion(.failure(NetworkError.decodingError))
-                    print("decoding error")
                     return
                 }
                 completion(.success(results))
@@ -86,10 +83,10 @@ final class NetworkManager {
             case .success(let characters):
                 print(characters)
                 let controller = TableViewController()
-                //characters.characters.forEach { character in
-                    controller.decodedData?.append(characters)
-               // }
-               // controller.decodedData[0] = characters
+                characters.results.forEach { character in
+                controller.decodedData?.append(character)
+              }
+              // controller.decodedData[0] = [characters]
                 print(controller.decodedData!)
             case .failure(let error):
                 print(error.localizedDescription)

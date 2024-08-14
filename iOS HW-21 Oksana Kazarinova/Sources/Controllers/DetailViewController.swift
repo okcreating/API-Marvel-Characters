@@ -37,7 +37,8 @@ extension DetailViewController {
     func cofigureImage() {
         var image: Image? {
             didSet {
-                detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").\(image?.extension ?? "")")
+                detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").jpg")
+                                                            //\(String(describing: image?.thumbnailExtension?.rawValue))")
             }
         }
     }

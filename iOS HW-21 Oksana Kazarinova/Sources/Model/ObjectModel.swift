@@ -7,31 +7,54 @@
 
 import Foundation
 
-public struct Characters: Codable {
-    let characters: [Character]
+struct Welcome: Decodable {
+    let code: Int?
+        let status, copyright, attributionText, attributionHTML: String?
+        let etag: String?
+        let data: Characters
 }
 
-struct Character: Codable {
-    let code: Int?
+struct Characters: Decodable {
+    let offset, limit, total, count: Int?
+    let results: [Character]
+}
+
+
+//public struct Characters: Decodable {
+//    let characters: [Character]
+//}
+
+struct Character: Decodable {
+    let id: Int?
     let name: String?
     let description: String?
     let thumbnail: Image?
     let comics: ComicList?
 }
 
-struct Image: Codable {
+struct Image: Decodable {
     let path: String?
-    let `extension`: String?
+    let thumbnailExtension: Extension?
+
+    enum CodingKeys: String, CodingKey {
+        case path
+        case thumbnailExtension = "extension"
+    }
 }
 
-struct ComicList: Codable {
+enum Extension: String, Decodable {
+    case gif = "gif"
+    case jpg = "jpg"
+}
+
+struct ComicList: Decodable {
     let available: Int?
     let returned: Int?
     let collectionURI: String?
     let items: [ComicSummary]?
 }
 
-struct ComicSummary: Codable {
-    let resourceURI: String
+struct ComicSummary: Decodable {
+    let resourceURI: String?
     let name: String?
 }
