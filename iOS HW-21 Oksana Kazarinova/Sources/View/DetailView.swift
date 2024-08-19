@@ -11,8 +11,9 @@ class DetailView: UIView {
 
     lazy var name: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold)
         label.textColor = .white
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -20,7 +21,7 @@ class DetailView: UIView {
 
     lazy var characterCode: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 10, weight: .regular)
+        label.font = .systemFont(ofSize: 11, weight: .regular)
         label.textColor = .black
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,9 +30,9 @@ class DetailView: UIView {
 
     lazy var infoAboutObject: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 10, weight: .semibold)
+        label.font = .systemFont(ofSize: 14, weight: .semibold)
         label.textColor = .black
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -39,9 +40,9 @@ class DetailView: UIView {
 
     lazy var listOfComics: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.font = .systemFont(ofSize: 14 , weight: .regular)
         label.textColor = .black
-        label.textAlignment = .left
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -98,23 +99,23 @@ class DetailView: UIView {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            name.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            name.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
+            //name.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            name.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
             name.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             name.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
 
-            characterCode.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 10),
+            characterCode.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5),
             characterCode.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             characterCode.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
 
-            iconContainer.widthAnchor.constraint(equalToConstant: 100),
-            iconContainer.heightAnchor.constraint(equalToConstant: 100),
-            iconContainer.topAnchor.constraint(equalTo: characterCode.bottomAnchor,constant: 15),
+            iconContainer.widthAnchor.constraint(equalToConstant: 200),
+            iconContainer.heightAnchor.constraint(equalToConstant: 200),
+            iconContainer.topAnchor.constraint(equalTo: characterCode.bottomAnchor,constant: 50),
             iconContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
-            infoAboutObject.topAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 10),
-            infoAboutObject.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-            infoAboutObject.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+            infoAboutObject.topAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 30),
+            infoAboutObject.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
+            infoAboutObject.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
 
             listOfComics.topAnchor.constraint(equalTo: infoAboutObject.bottomAnchor, constant: 10),
             listOfComics.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
@@ -127,7 +128,7 @@ class DetailView: UIView {
 
     func configureView(with model: Character) {
         name.text = model.name
-        characterCode.text = String(describing: model.id)
+        characterCode.text = " Character code is \(model.id ?? 0000)"
         infoAboutObject.text = model.description
     }
 }

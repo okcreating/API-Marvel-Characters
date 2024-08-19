@@ -12,7 +12,7 @@ class TableView: UIView {
     // MARK: - Outlets
 
     lazy var mainTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
