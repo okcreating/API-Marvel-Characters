@@ -25,10 +25,26 @@ class TableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = TableView()
-        configureTableView()
         mainView.activityIndictor.startAnimating()
-        networkManager.dataWorkout()
+        getData()
+        configureTableView()
         configureSearchBar()
+    }
+
+    func getData() {
+        networkManager.getData { results in
+                switch results {
+                case .success(let characters):
+                    self.decodedData = characters
+                        print(self.decodedData?.count ?? "0 in decoded")
+                    self.filteredData = self.decodedData
+                    self.mainView.mainTableView.reloadData()
+                    print("filtered = decoded")
+                    print(self.filteredData?.count ?? "0 in filtered")
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -46,15 +62,18 @@ private extension TableViewController {
 
     func configureSearchBar() {
         mainView.searchBar.delegate = self
-        decodedData = [Character]()
-        filteredData = decodedData
+//        decodedData = [Character]()
+//        filteredData = [Character]()
+//        print(self.filteredData?.count ?? "jkk")
+        //filteredData = decodedData
     }
 }
 
 extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        filteredData?.count ?? 0
+        decodedData?.count ?? 0
+
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,13 +84,13 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         let character = filteredData?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
         cell?.character = character
+        cell?.image = character?.thumbnail
         mainView?.activityIndictor.stopAnimating()
         return cell ?? UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let character = filteredData?[indexPath.row]
-
         let detailedController = DetailViewController()
         tableView.deselectRow(at: indexPath, animated: true)
         detailedController.detailedModel = character
@@ -87,6 +106,9 @@ extension TableViewController: UISearchBarDelegate {
             return ((item.name?.lowercased().contains(searchText.lowercased())) != nil)
           })
         mainView.mainTableView.reloadData()
+
+
+
 //        decodedData?.forEach({ character in
 //            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
 //        })

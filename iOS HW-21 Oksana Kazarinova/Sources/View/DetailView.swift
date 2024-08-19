@@ -32,6 +32,7 @@ class DetailView: UIView {
         label.font = .systemFont(ofSize: 10, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

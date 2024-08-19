@@ -31,7 +31,7 @@ class TableView: UIView {
     lazy var activityIndictor: UIActivityIndicatorView = {
         let activitySign = UIActivityIndicatorView()
         activitySign.style = .medium
-        activitySign.hidesWhenStopped = true
+        //activitySign.hidesWhenStopped = true
         activitySign.translatesAutoresizingMaskIntoConstraints = false
         return activitySign
     }()

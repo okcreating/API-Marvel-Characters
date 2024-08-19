@@ -26,12 +26,12 @@ final class NetworkManager {
     //        self.queryItems = queryItems
     //    }
 
-    func createURL(path: Path) -> URL? {
+    func createURL(path: Path) -> String? {
 
         let publicKey = "79eaebd384b9c4dc6d5b8498c70de65f"
         let privateKey = "56d8367e02b0b31038ed8293b79bd42c71cbe0e7"
-        let ts = String(Date.now.timeIntervalSince1970)
-        //let ts = "1"
+        //let ts = String(Date.now.timeIntervalSince1970)
+        let ts = "1"
         let hashString = "\(ts)\(privateKey)\(publicKey)".md5
 
         let limitQueryItem = URLQueryItem(name: "limit", value: "10")
@@ -45,18 +45,12 @@ final class NetworkManager {
         components.path = path.rawValue
         components.queryItems = [limitQueryItem, tsQueryItem, apiQueryItem, hashQueryItem]
 
-        let url = components.url
-        print(url!)
+        let url = components.url?.absoluteString ?? ""
+        print(url)
         return url
     }
 
-    //    func createRequest(url: URL?) -> URLRequest? {
-    //        guard let url else { return nil }
-    //        var request = URLRequest(url: url)
-    //        request.httpMethod = "GET"
-    //    }
-
-    func getData(completion: @escaping (Result<Characters, NetworkError>) -> ()) {
+    func getData(completion: @escaping (Result<[Character], NetworkError>) -> ()) {
         let url = createURL(path: .listOfCharacters)
         guard let marvelUrl = url else { return }
         AF.request(marvelUrl)
@@ -72,28 +66,12 @@ final class NetworkManager {
                     completion(.failure(NetworkError.decodingError))
                     return
                 }
-                completion(.success(results))
+                completion(.success(results.data.results))
                 print("got data")
             }
         }
-
-    func dataWorkout() {
-        getData { results in
-            switch results {
-            case .success(let characters):
-                print(characters)
-                let controller = TableViewController()
-                characters.results.forEach { character in
-                controller.decodedData?.append(character)
-              }
-              // controller.decodedData[0] = [characters]
-                print(controller.decodedData!)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
     }
-}
+
 
 
 

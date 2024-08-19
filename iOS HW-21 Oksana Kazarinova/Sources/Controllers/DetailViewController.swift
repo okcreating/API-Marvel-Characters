@@ -16,6 +16,18 @@ class DetailViewController: UIViewController {
         return view as? DetailView
     }
 
+    var image: Image? {
+        didSet {
+            detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").\(String(describing: image?.thumbnailExtension?.rawValue))")
+        }
+    }
+
+    var comicName: ComicSummary? {
+        didSet {
+            detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view = DetailView()
@@ -27,29 +39,6 @@ extension DetailViewController {
     func cofigureView() {
         guard let models = detailedModel else { return }
         detailedView?.configureView(with: models)
-        cofigureImage()
-        cofigureComicsList()
         detailedView?.activityIndictor.stopAnimating()
-    }
-}
-
-extension DetailViewController {
-    func cofigureImage() {
-        var image: Image? {
-            didSet {
-                detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").jpg")
-                                                            //\(String(describing: image?.thumbnailExtension?.rawValue))")
-            }
-        }
-    }
-}
-
-extension DetailViewController {
-    func cofigureComicsList() {
-            var comicName: ComicSummary? {
-                didSet {
-                    detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
-                }
-            }
     }
 }

@@ -7,22 +7,13 @@
 
 import Foundation
 
-struct Welcome: Decodable {
-    let code: Int?
-        let status, copyright, attributionText, attributionHTML: String?
-        let etag: String?
-        let data: Characters
+struct Characters: Decodable {
+    let data: Results
 }
 
-struct Characters: Decodable {
-    let offset, limit, total, count: Int?
+struct Results: Decodable {
     let results: [Character]
 }
-
-
-//public struct Characters: Decodable {
-//    let characters: [Character]
-//}
 
 struct Character: Decodable {
     let id: Int?
