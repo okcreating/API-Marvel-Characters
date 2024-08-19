@@ -96,6 +96,10 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         detailedController.detailedModel = character
         navigationController?.pushViewController(detailedController, animated: true)
     }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        90
+    }
 }
 
 extension TableViewController: UISearchBarDelegate {

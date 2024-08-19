@@ -28,7 +28,9 @@ class TableViewCell: UITableViewCell {
 
     private var name: UILabel = {
         let name = UILabel()
-        name.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        name.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        name.textColor = .systemRed
+        name.preferredMaxLayoutWidth = 240
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
@@ -41,19 +43,20 @@ class TableViewCell: UITableViewCell {
     private var imageContainer: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        //imageView.layer.masksToBounds = true
+        imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5
-        imageView.frame.size.width = 50
-        imageView.frame.size.height = 50
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
     private var objectDescription: UILabel = {
         let description = UILabel()
-        description.font = UIFont.systemFont(ofSize: 10, weight: .light)
-        description.numberOfLines = 4
+        description.font = UIFont.systemFont(ofSize: 11, weight: .light)
+        description.numberOfLines = 2
+        description.textAlignment = .left
+        description.preferredMaxLayoutWidth = 240
+        description.lineBreakMode = .byTruncatingTail
         description.translatesAutoresizingMaskIntoConstraints = false
         return description
     }()
@@ -81,19 +84,21 @@ class TableViewCell: UITableViewCell {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 2),
-//            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
-//            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -2),
-            imageContainer.widthAnchor.constraint(equalToConstant: 30),
-            imageContainer.heightAnchor.constraint(equalToConstant: 30),
+            imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+//            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            imageContainer.widthAnchor.constraint(equalToConstant: 75),
+            imageContainer.heightAnchor.constraint(equalToConstant: 75),
 
-            name.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 5),
-            name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
-            name.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -2),
+            name.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
+            name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
 
-            objectDescription.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 5),
-            objectDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5),
-            objectDescription.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 2)
+           // name.bottomAnchor.constraint(equalTo: objectDescription.topAnchor, constant: -5),
+
+            objectDescription.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
+           // objectDescription.widthAnchor.constraint(equalToConstant: 250),
+           // objectDescription.heightAnchor.constraint(equalToConstant: 40),
+            objectDescription.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5)
         ])
     }
 
