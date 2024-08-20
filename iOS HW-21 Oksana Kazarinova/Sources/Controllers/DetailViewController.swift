@@ -16,12 +16,6 @@ class DetailViewController: UIViewController {
         return view as? DetailView
     }
 
-    var image: Image? {
-        didSet {
-            detailedView?.iconContainer.image = UIImage(named: "\(image?.path ?? "").\(String(describing: image?.thumbnailExtension?.rawValue))")
-        }
-    }
-
     var comicName: ComicSummary? {
         didSet {
             detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
@@ -40,5 +34,6 @@ extension DetailViewController {
         guard let models = detailedModel else { return }
         detailedView?.configureView(with: models)
         detailedView?.activityIndictor.stopAnimating()
+        
     }
 }

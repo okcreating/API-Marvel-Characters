@@ -23,9 +23,9 @@ struct Character: Decodable {
     let comics: ComicList?
 }
 
-struct Image: Decodable {
+struct Image: Codable {
     let path: String?
-    let thumbnailExtension: Extension?
+    let thumbnailExtension: String?
 
     enum CodingKeys: String, CodingKey {
         case path
@@ -33,10 +33,10 @@ struct Image: Decodable {
     }
 }
 
-enum Extension: String, Decodable {
-    case gif = "gif"
-    case jpg = "jpg"
-}
+//enum Extension: String, Decodable {
+//    case gif = "gif"
+//    case jpg = "jpg"
+//}
 
 struct ComicList: Decodable {
     let available: Int?

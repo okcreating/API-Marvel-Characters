@@ -84,7 +84,7 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
         let character = filteredData?[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
         cell?.character = character
-        cell?.image = character?.thumbnail
+        //cell?.image = character?.thumbnail
         mainView?.activityIndictor.stopAnimating()
         return cell ?? UITableViewCell()
     }
