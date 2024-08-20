@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class TableViewCell: UITableViewCell {
 
@@ -15,12 +16,7 @@ class TableViewCell: UITableViewCell {
         didSet {
             name.text = character?.name
             objectDescription.text = character?.description
-        }
-    }
-
-    var image: Image? {
-        didSet {
-            imageContainer.image = UIImage(named: "\(image?.path ?? "").\(String(describing: image?.thumbnailExtension?.rawValue))")
+            downoadImage()
         }
     }
 
@@ -35,14 +31,9 @@ class TableViewCell: UITableViewCell {
         return name
     }()
 
-//    private var icon: UIImage = {
-//        let image = UIImage()
-//        return image
-//    }()
-
     private var imageContainer: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 5
@@ -100,6 +91,15 @@ class TableViewCell: UITableViewCell {
            // objectDescription.heightAnchor.constraint(equalToConstant: 40),
             objectDescription.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5)
         ])
+    }
+
+    private func downoadImage() {
+        guard let imagePath = self.character?.thumbnail?.path,
+              let imageExtension = self.character?.thumbnail?.thumbnailExtension,
+              let imageURL = URL(string: "\(imagePath).\(imageExtension)")
+        else { return }
+
+        imageContainer.kf.setImage(with: imageURL)
     }
 
     // MARK: - Reuse

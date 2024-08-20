@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailView: UIView {
 
@@ -47,10 +48,9 @@ class DetailView: UIView {
         return label
     }()
 
-
     lazy var iconContainer: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill
         image.layer.masksToBounds = true
         image.clipsToBounds = true
         image.layer.cornerRadius = 5
@@ -130,5 +130,11 @@ class DetailView: UIView {
         name.text = model.name
         characterCode.text = " Character code is \(model.id ?? 0000)"
         infoAboutObject.text = model.description
+
+        guard let imagePath = model.thumbnail?.path,
+              let imageExtension = model.thumbnail?.thumbnailExtension,
+              let imageURL = URL(string: "\(imagePath).\(imageExtension)")
+        else { return }
+        iconContainer.kf.setImage(with: imageURL)
     }
 }
