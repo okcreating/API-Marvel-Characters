@@ -20,10 +20,10 @@ class TableView: UIView {
     lazy var searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.placeholder = "Type the character here"
-        bar.enablesReturnKeyAutomatically = true
         bar.keyboardType = .webSearch
-        bar.returnKeyType = .search
+        bar.searchTextField.clearButtonMode = .never
         bar.sizeToFit()
+        bar.showsCancelButton = false
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()

@@ -64,16 +64,14 @@ private extension TableViewController {
         mainView.searchBar.delegate = self
 //        decodedData = [Character]()
 //        filteredData = [Character]()
-//        print(self.filteredData?.count ?? "jkk")
-        //filteredData = decodedData
+        filteredData = decodedData
     }
 }
 
 extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        decodedData?.count ?? 0
-
+        filteredData?.count ?? 0
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -105,31 +103,28 @@ extension TableViewController: UITableViewDataSource, UITableViewDelegate {
 extension TableViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = decodedData?.filter({ item -> Bool in
-          if searchText.isEmpty { return true }
-            return ((item.name?.lowercased().contains(searchText.lowercased())) != nil)
-          })
+        if searchText == "" {
+            return
+        } else {
+            filteredData = filteredData?.filter { $0.name!.lowercased().contains(searchText.lowercased())
+            }
         mainView.mainTableView.reloadData()
+        }
 
-
-
-//        decodedData?.forEach({ character in
-//            filteredData = searchText.isEmpty ? decodedData : decodedData.filter { (name)
-//        })
-//
-//        }
 //        filteredData = searchText.isEmpty ? decodedData : decodedData?.filter { (name: String) -> Bool in
 //            return name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
-//
-//
-//        }
-//        mainView.mainTableView.reloadData()
     }
-    
+
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-            searchBar.showsCancelButton = false
-            searchBar.text = ""
-            searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        filteredData = decodedData
+        mainView.mainTableView.reloadData()
+        searchBar.resignFirstResponder()
     }
 }
 
