@@ -20,10 +20,11 @@ class TableView: UIView {
     lazy var searchBar: UISearchBar = {
         let bar = UISearchBar()
         bar.placeholder = "Type the character here"
-        bar.enablesReturnKeyAutomatically = true
         bar.keyboardType = .webSearch
-        bar.returnKeyType = .search
+        bar.searchTextField.clearButtonMode = .never
+        bar.enablesReturnKeyAutomatically = false
         bar.sizeToFit()
+        bar.showsCancelButton = false
         bar.translatesAutoresizingMaskIntoConstraints = false
         return bar
     }()
@@ -31,7 +32,7 @@ class TableView: UIView {
     lazy var activityIndictor: UIActivityIndicatorView = {
         let activitySign = UIActivityIndicatorView()
         activitySign.style = .medium
-        //activitySign.hidesWhenStopped = true
+        activitySign.hidesWhenStopped = true
         activitySign.translatesAutoresizingMaskIntoConstraints = false
         return activitySign
     }()
@@ -60,7 +61,6 @@ class TableView: UIView {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-
             searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: self.trailingAnchor),

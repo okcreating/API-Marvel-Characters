@@ -16,11 +16,11 @@ class DetailViewController: UIViewController {
         return view as? DetailView
     }
 
-    var comicName: ComicSummary? {
-        didSet {
-            detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
-        }
-    }
+//    var comicName: ComicSummary? {
+//        didSet {
+//            detailedView?.listOfComics.text = "Comics: (\(String(describing: comicName?.name)))"
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +34,5 @@ extension DetailViewController {
         guard let models = detailedModel else { return }
         detailedView?.configureView(with: models)
         detailedView?.activityIndictor.stopAnimating()
-        
     }
 }

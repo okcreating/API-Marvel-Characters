@@ -77,18 +77,13 @@ class TableViewCell: UITableViewCell {
         NSLayoutConstraint.activate([
             imageContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             imageContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-//            imageContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             imageContainer.widthAnchor.constraint(equalToConstant: 75),
             imageContainer.heightAnchor.constraint(equalToConstant: 75),
 
             name.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
             name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
 
-           // name.bottomAnchor.constraint(equalTo: objectDescription.topAnchor, constant: -5),
-
             objectDescription.leadingAnchor.constraint(equalTo: imageContainer.trailingAnchor, constant: 10),
-           // objectDescription.widthAnchor.constraint(equalToConstant: 250),
-           // objectDescription.heightAnchor.constraint(equalToConstant: 40),
             objectDescription.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 5)
         ])
     }

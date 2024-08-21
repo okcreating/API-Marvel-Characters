@@ -14,17 +14,6 @@ enum Path: String {
 }
 
 final class NetworkManager {
-    
-
-    //    var host: String
-    //    var path: Path
-    //    var queryItems: [URLQueryItem]
-    //
-    //    init(host: String, path: Path, queryItems: [URLQueryItem]) {
-    //        self.host = host
-    //        self.path = path
-    //        self.queryItems = queryItems
-    //    }
 
     func createURL(path: Path) -> String? {
 
@@ -34,7 +23,7 @@ final class NetworkManager {
         let ts = "1"
         let hashString = "\(ts)\(privateKey)\(publicKey)".md5
 
-        let limitQueryItem = URLQueryItem(name: "limit", value: "10")
+        let limitQueryItem = URLQueryItem(name: "limit", value: "20")
         let tsQueryItem = URLQueryItem(name: "ts", value: ts)
         let apiQueryItem = URLQueryItem(name: "apikey", value: publicKey)
         let hashQueryItem = URLQueryItem(name: "hash", value: hashString)
@@ -67,7 +56,6 @@ final class NetworkManager {
                     return
                 }
                 completion(.success(results.data.results))
-                print("got data")
             }
         }
     }

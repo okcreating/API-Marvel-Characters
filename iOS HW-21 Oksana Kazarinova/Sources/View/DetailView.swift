@@ -10,6 +10,8 @@ import Kingfisher
 
 class DetailView: UIView {
 
+    // MARK: Outlets
+
     lazy var name: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 18, weight: .bold)
@@ -44,6 +46,9 @@ class DetailView: UIView {
         label.font = .systemFont(ofSize: 14 , weight: .regular)
         label.textColor = .black
         label.textAlignment = .center
+        label.numberOfLines = 0
+        label.preferredMaxLayoutWidth = 320
+        label.lineBreakMode = .byTruncatingTail
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -99,8 +104,7 @@ class DetailView: UIView {
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            //name.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            name.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
+            name.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             name.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             name.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
 
@@ -110,26 +114,33 @@ class DetailView: UIView {
 
             iconContainer.widthAnchor.constraint(equalToConstant: 200),
             iconContainer.heightAnchor.constraint(equalToConstant: 200),
-            iconContainer.topAnchor.constraint(equalTo: characterCode.bottomAnchor,constant: 50),
+            iconContainer.topAnchor.constraint(equalTo: characterCode.bottomAnchor,constant: 20),
             iconContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
 
-            infoAboutObject.topAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 30),
-            infoAboutObject.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 25),
-            infoAboutObject.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -25),
+            infoAboutObject.topAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 20),
+            infoAboutObject.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            infoAboutObject.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
 
-            listOfComics.topAnchor.constraint(equalTo: infoAboutObject.bottomAnchor, constant: 10),
-            listOfComics.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-            listOfComics.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+            listOfComics.topAnchor.constraint(equalTo: infoAboutObject.bottomAnchor, constant: 20),
+            listOfComics.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            listOfComics.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            listOfComics.heightAnchor.constraint(equalToConstant: 130),
 
             activityIndictor.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             activityIndictor.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 
+    // MARK: Mathods
+
     func configureView(with model: Character) {
         name.text = model.name
         characterCode.text = " Character code is \(model.id ?? 0000)"
         infoAboutObject.text = model.description
+        let comics = model.comics?.items?.map { comic in
+            comic.name ?? "Unknown comic"
+        }.joined(separator: ", ")
+        listOfComics.text = "List of comics:\n \(comics ?? "unknown edition")"
 
         guard let imagePath = model.thumbnail?.path,
               let imageExtension = model.thumbnail?.thumbnailExtension,
