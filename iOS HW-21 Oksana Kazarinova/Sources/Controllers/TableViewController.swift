@@ -63,11 +63,12 @@ private extension TableViewController {
 
     func configureSearchBar() {
         mainView.searchBar.delegate = self
+        mainView.searchBar.searchTextField.delegate = self
         filteredData = decodedData
     }
 }
 
-extension TableViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+extension TableViewController: UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITextFieldDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         filteredData?.count ?? 0
@@ -113,9 +114,6 @@ extension TableViewController: UISearchBarDelegate {
             print(filteredData?.count as Any)
             mainView.mainTableView.reloadData()
         }
-
-        //        filteredData = searchText.isEmpty ? decodedData : decodedData?.filter { (name: String) -> Bool in
-        //            return name.range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
     }
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -144,6 +142,12 @@ extension TableViewController: UISearchBarDelegate {
         } else {
             mainView.endEditing(true)
         }
+    }
+
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        filteredData = decodedData
+        mainView.mainTableView.reloadData()
+        return true
     }
 }
 

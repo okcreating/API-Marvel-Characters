@@ -75,6 +75,7 @@ class DetailView: UIView {
         let activitySign = UIActivityIndicatorView()
         activitySign.style = .medium
         activitySign.hidesWhenStopped = true
+        activitySign.translatesAutoresizingMaskIntoConstraints = false
         return activitySign
     }()
 
